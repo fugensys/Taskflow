@@ -1,0 +1,76 @@
+import { Task } from '@/types/task';
+
+export const INITIAL_TASKS: Task[] = [
+  {
+    id: 'task-1',
+    title: 'Implement OAuth2 authentication flow',
+    description: 'Integrate Google and GitHub OAuth providers with secure session tokens and cookie management.',
+    status: 'in_progress',
+    priority: 'high',
+    category: 'Engineering',
+    dueDate: '2026-11-18',
+    subtasks: [
+      { id: 'sub-1', title: 'Setup Google console credentials', completed: true },
+      { id: 'sub-2', title: 'Configure callback API route', completed: true },
+      { id: 'sub-3', title: 'Add session persistence middleware', completed: false },
+    ],
+    createdAt: '2026-11-01T10:00:00Z',
+  },
+  {
+    id: 'task-2',
+    title: 'Design Q4 marketing landing page',
+    description: 'Create high-conversion hero section, customer testimonials, and feature bento grid.',
+    status: 'completed',
+    priority: 'medium',
+    category: 'Marketing',
+    dueDate: '2026-11-10',
+    subtasks: [
+      { id: 'sub-4', title: 'Wireframe layout in Figma', completed: true },
+      { id: 'sub-5', title: 'Export responsive assets', completed: true },
+      { id: 'sub-6', title: 'Implement Tailwind animations', completed: true },
+    ],
+    createdAt: '2026-11-02T11:30:00Z',
+  },
+  {
+    id: 'task-3',
+    title: 'Refactor state management architecture',
+    description: 'Migrate legacy prop drilling to Zustand with persistent storage middleware for improved performance.',
+    status: 'pending',
+    priority: 'high',
+    category: 'Engineering',
+    dueDate: '2026-11-25',
+    subtasks: [
+      { id: 'sub-7', title: 'Audit current context providers', completed: false },
+      { id: 'sub-8', title: 'Write unit tests for store actions', completed: false },
+    ],
+    createdAt: '2026-11-05T09:15:00Z',
+  },
+  {
+    id: 'task-4',
+    title: 'Quarterly financial budget review',
+    description: 'Analyze cloud infrastructure costs, API usage expenses, and projected SaaS subscription revenue.',
+    status: 'pending',
+    priority: 'low',
+    category: 'Finance',
+    dueDate: '2026-11-30',
+    subtasks: [
+      { id: 'sub-9', title: 'Export AWS and Cloudflare billing logs', completed: false },
+      { id: 'sub-10', title: 'Prepare slide deck for board meeting', completed: false },
+    ],
+    createdAt: '2026-11-06T14:20:00Z',
+  },
+  {
+    id: 'task-5',
+    title: 'Redesign mobile navigation drawer',
+    description: 'Improve touch targets, add smooth slide transitions, and simplify bottom bar accessibility.',
+    status: 'in_progress',
+    priority: 'medium',
+    category: 'Design',
+    dueDate: '2026-11-20',
+    subtasks: [
+      { id: 'sub-11', title: 'Test touch target sizes (>= 44px)', completed: true },
+      { id: 'sub-12', title: 'Ensure dark mode contrast compliance', completed: false },
+    ],
+    createdAt: '2026-11-07T16:45:00Z',
+  },
+];
