@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Calendar, CheckCircle2, Clock, AlertCircle, MoreVertical, Edit3, Trash2, CheckSquare } from 'lucide-react';
+import { Calendar, CheckCircle2, Clock, AlertCircle, Edit3, Trash2, CheckSquare } from 'lucide-react';
 import { Task } from '@/types/task';
 
 interface TaskCardProps {
@@ -19,8 +19,6 @@ export default function TaskCard({
 }: TaskCardProps) {
   const completedSubtasks = task.subtasks.filter(s => s.completed).length;
   const totalSubtasks = task.subtasks.length;
-
-  const isOverdue = new Date(task.dueDate) < new Date() && task.status !== 'completed';
 
   return (
     <div className="bg-white border border-slate-200 rounded-2xl p-5 hover:border-slate-300 transition-all shadow-xs flex flex-col justify-between group">
@@ -95,10 +93,9 @@ export default function TaskCard({
 
       {/* Footer: Due Date & Status Toggle */}
       <div className="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
-        <div className={`flex items-center gap-1.5 text-xs font-medium ${isOverdue ? 'text-rose-600' : 'text-slate-500'}`}>
+        <div className="flex items-center gap-1.5 text-xs font-medium text-slate-500">
           <Calendar className="w-3.5 h-3.5" />
           <span>Due {task.dueDate}</span>
-          {isOverdue && <span className="text-[10px] bg-rose-50 text-rose-700 px-1.5 py-0.5 rounded font-semibold ml-1">Overdue</span>}
         </div>
 
         <button

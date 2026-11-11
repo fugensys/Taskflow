@@ -1,18 +1,18 @@
 # TaskFlow — Modern Task Management SaaS Dashboard
 
-TaskFlow is a modern, responsive task management SaaS dashboard built with Next.js App Router, React, TypeScript, and Tailwind CSS. It provides intuitive task creation, category filtering, Kanban board management, subtasks checklists, and real-time analytics.
+TaskFlow is a modern, responsive task management SaaS dashboard built with Next.js App Router, React, TypeScript, and Tailwind CSS. Connected to **Supabase** via `@supabase/supabase-js`, it supports real database CRUD operations with Row Level Security (RLS) policies enforced.
 
 ---
 
 ## Features
 
+- **Supabase Cloud Database**: Real-time CRUD operations against the Supabase `tasks` table with RLS policy respect and resilient local caching fallback.
 - **Dashboard Overview**: Summary statistics for total, completed, pending, and in-progress tasks, along with completion rate tracking.
 - **Task Management**: Create, edit, and delete tasks with custom titles, descriptions, categories, priorities (Low, Medium, High), and due dates.
 - **Subtasks Checklist**: Break down tasks into actionable subtasks with live progress bars.
-- **Kanban Board**: Drag-and-drop or column-based status transition view (Pending, In Progress, Completed).
+- **Kanban Board**: Column-based status transition view (Pending, In Progress, Completed).
 - **Advanced Filtering & Sorting**: Filter by status, priority, and category, or search by keyword instantly.
-- **Persistent Storage**: Client-side synchronization with browser `localStorage`.
-- **Responsive SaaS UI**: Polished typography (Plus Jakarta Sans), clean neutral color palette, and mobile-friendly navigation.
+- **Responsive SaaS UI**: Polished typography, clean neutral color palette, and mobile-friendly navigation.
 
 ---
 
@@ -23,25 +23,28 @@ TaskFlow is a modern, responsive task management SaaS dashboard built with Next.
 - Node.js 18+ installed on your system.
 - npm or pnpm package manager.
 
-### Installation
+### Environment Variables
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/taskflow.git
-   cd taskflow
-   ```
+Configure your environment variables in `.env` (or via AI Studio Secrets):
 
-2. Install dependencies:
+```env
+SUPABASE_URL="https://your-project.supabase.co"
+SUPABASE_ANON_KEY="your-supabase-anon-key"
+```
+
+### Installation & Run
+
+1. Install dependencies:
    ```bash
    npm install
    ```
 
-3. Run the development server:
+2. Run the development server:
    ```bash
    npm run dev
    ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
+3. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
@@ -79,7 +82,9 @@ TaskFlow is fully compatible with Next.js static and standalone output modes for
 │   ├── TaskList.tsx     # Filterable list view
 │   └── TaskModal.tsx    # Create and edit task modal
 ├── lib/
-│   └── initial-tasks.ts # Default starter mock tasks
+│   ├── initial-tasks.ts # Default starter mock tasks
+│   ├── supabase.ts      # Supabase client initialization
+│   └── tasks-service.ts # Supabase CRUD service with RLS
 └── types/
     └── task.ts          # TypeScript interfaces
 ```
