@@ -1,12 +1,12 @@
 # TaskFlow — Modern Task Management SaaS Dashboard
 
-TaskFlow is a modern, responsive task management SaaS dashboard built with Next.js App Router, React, TypeScript, and Tailwind CSS. Connected to **Supabase** via `@supabase/supabase-js`, it supports real database CRUD operations with Row Level Security (RLS) policies enforced.
+TaskFlow is a modern, responsive task management SaaS dashboard built with Next.js App Router, React, TypeScript, and Tailwind CSS. Connected directly to **Supabase** via `@supabase/supabase-js` using public environment variables, it supports real database CRUD operations with Row Level Security (RLS) policies enforced.
 
 ---
 
 ## Features
 
-- **Supabase Cloud Database**: Real-time CRUD operations against the Supabase `tasks` table with RLS policy respect and resilient local caching fallback.
+- **Supabase Cloud Database**: Real-time CRUD operations against the Supabase `tasks` table with RLS policy respect.
 - **Dashboard Overview**: Summary statistics for total, completed, pending, and in-progress tasks, along with completion rate tracking.
 - **Task Management**: Create, edit, and delete tasks with custom titles, descriptions, categories, priorities (Low, Medium, High), and due dates.
 - **Subtasks Checklist**: Break down tasks into actionable subtasks with live progress bars.
@@ -25,11 +25,11 @@ TaskFlow is a modern, responsive task management SaaS dashboard built with Next.
 
 ### Environment Variables
 
-Configure your environment variables in `.env` (or via AI Studio Secrets):
+Configure your environment variables in `.env.local` (or via AI Studio Secrets):
 
 ```env
-SUPABASE_URL="https://your-project.supabase.co"
-SUPABASE_ANON_KEY="your-supabase-anon-key"
+NEXT_PUBLIC_SUPABASE_URL="https://your-project.supabase.co"
+NEXT_PUBLIC_SUPABASE_ANON_KEY="your-supabase-anon-key"
 ```
 
 ### Installation & Run
@@ -48,21 +48,16 @@ SUPABASE_ANON_KEY="your-supabase-anon-key"
 
 ---
 
-## Deployment
+## Deployment (Cloudflare Pages Static Export)
 
-### Deploy to Cloudflare Workers / Pages
-
-TaskFlow is fully compatible with Next.js static and standalone output modes for deployment on Cloudflare Pages or Cloudflare Workers (via `@cloudflare/next-on-pages`).
+TaskFlow is configured for Next.js static export (`output: 'export'`) optimized for Cloudflare Pages:
 
 1. Build the production application:
    ```bash
    npm run build
    ```
 
-2. Deploy using Wrangler CLI:
-   ```bash
-   npx wrangler pages deploy .vercel/output/static
-   ```
+2. Output files will be generated in the `/out` directory.
 
 ---
 
@@ -81,9 +76,11 @@ TaskFlow is fully compatible with Next.js static and standalone output modes for
 │   ├── TaskCard.tsx     # Individual task card
 │   ├── TaskList.tsx     # Filterable list view
 │   └── TaskModal.tsx    # Create and edit task modal
+├── hooks/
+│   └── use-client.ts    # Hydration-safe client mounting hook
 ├── lib/
 │   ├── initial-tasks.ts # Default starter mock tasks
-│   ├── supabase.ts      # Supabase client initialization
+│   ├── supabase.ts      # Supabase browser-side client initialization
 │   └── tasks-service.ts # Supabase CRUD service with RLS
 └── types/
     └── task.ts          # TypeScript interfaces

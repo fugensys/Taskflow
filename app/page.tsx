@@ -35,7 +35,7 @@ export default function Page() {
 
   const isClient = useIsClient();
 
-  // Load tasks from Supabase (or localStorage fallback) on mount
+  // Load tasks from Supabase (or fallback) on mount
   useEffect(() => {
     let isMounted = true;
     fetchTasksFromSupabase().then((data) => {
@@ -48,13 +48,6 @@ export default function Page() {
       isMounted = false;
     };
   }, []);
-
-  // Sync with localStorage as backup cache
-  useEffect(() => {
-    if (tasks.length > 0) {
-      localStorage.setItem('taskflow_tasks', JSON.stringify(tasks));
-    }
-  }, [tasks]);
 
   // Counts
   const total = tasks.length;

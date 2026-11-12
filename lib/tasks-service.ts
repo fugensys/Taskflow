@@ -4,15 +4,6 @@ import { INITIAL_TASKS } from './initial-tasks';
 
 export async function fetchTasksFromSupabase(): Promise<Task[]> {
   if (!isSupabaseConfigured || !supabase) {
-    // Fallback to localStorage
-    const saved = localStorage.getItem('taskflow_tasks');
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch (e) {
-        console.error('Error parsing local tasks', e);
-      }
-    }
     return INITIAL_TASKS;
   }
 
@@ -24,13 +15,11 @@ export async function fetchTasksFromSupabase(): Promise<Task[]> {
 
     if (error) {
       console.error('Supabase fetch error:', error.message);
-      // Fallback to local
-      const saved = localStorage.getItem('taskflow_tasks');
-      return saved ? JSON.parse(saved) : INITIAL_TASKS;
+      return INITIAL_TASKS;
     }
 
     if (!data || data.length === 0) {
-      return INITIAL_TASKS;
+      return [];
     }
 
     // Map database columns to Task type
@@ -47,8 +36,7 @@ export async function fetchTasksFromSupabase(): Promise<Task[]> {
     }));
   } catch (err) {
     console.error('Supabase exception during fetch:', err);
-    const saved = localStorage.getItem('taskflow_tasks');
-    return saved ? JSON.parse(saved) : INITIAL_TASKS;
+    return INITIAL_TASKS;
   }
 }
 
