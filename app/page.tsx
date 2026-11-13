@@ -64,19 +64,23 @@ export default function Page() {
 
   // Handlers
   const handleSaveTask = async (taskData: Omit<Task, 'id' | 'createdAt'> & { id?: string }) => {
-    const saved = await saveTaskToSupabase(taskData);
-    if (taskData.id) {
-      setTasks(tasks.map(t => t.id === taskData.id ? saved : t));
-    } else {
-      setTasks([saved, ...tasks]);
+    try {
+      await saveTaskToSupabase(taskData);
+      const freshTasks = await fetchTasksFromSupabase();
+      setTasks(freshTasks);
+    } catch (err: any) {
+      alert(err.message || 'Failed to save task to database.');
     }
   };
 
   const handleDeleteTask = async (id: string) => {
     if (confirm('Are you sure you want to delete this task?')) {
-      const success = await deleteTaskFromSupabase(id);
-      if (success) {
-        setTasks(tasks.filter(t => t.id !== id));
+      try {
+        await deleteTaskFromSupabase(id);
+        const freshTasks = await fetchTasksFromSupabase();
+        setTasks(freshTasks);
+      } catch (err: any) {
+        alert(err.message || 'Failed to delete task from database.');
       }
     }
   };
@@ -89,12 +93,16 @@ export default function Page() {
       task.status === 'pending' ? 'in_progress' :
       task.status === 'in_progress' ? 'completed' : 'pending';
 
-    const updated = await saveTaskToSupabase({
-      ...task,
-      status: nextStatus
-    });
-
-    setTasks(tasks.map(t => t.id === id ? updated : t));
+    try {
+      await saveTaskToSupabase({
+        ...task,
+        status: nextStatus
+      });
+      const freshTasks = await fetchTasksFromSupabase();
+      setTasks(freshTasks);
+    } catch (err: any) {
+      alert(err.message || 'Failed to update task status in database.');
+    }
   };
 
   const handleOpenNewTask = () => {

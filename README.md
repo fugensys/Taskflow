@@ -1,18 +1,18 @@
 # TaskFlow — Modern Task Management SaaS Dashboard
 
-TaskFlow is a modern, responsive task management SaaS dashboard built with Next.js App Router, React, TypeScript, and Tailwind CSS. Connected directly to **Supabase** via `@supabase/supabase-js` using public environment variables, it supports real database CRUD operations with Row Level Security (RLS) policies enforced.
+TaskFlow is a modern, responsive task management SaaS dashboard built with Next.js App Router, React, TypeScript, and Tailwind CSS. Connected directly to **Supabase** via `@supabase/supabase-js` using public environment variables (`NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`), it provides complete database CRUD operations with strict error handling and UI state synchronization.
 
 ---
 
 ## Features
 
-- **Supabase Cloud Database**: Real-time CRUD operations against the Supabase `tasks` table with RLS policy respect.
+- **Supabase Cloud Database**: Real-time CRUD operations against the Supabase `tasks` table matching the exact database schema (`id`, `title`, `description`, `status`, `priority`, `category`, `due_date`, `subtasks`, `created_at`, `updated_at`).
 - **Dashboard Overview**: Summary statistics for total, completed, pending, and in-progress tasks, along with completion rate tracking.
 - **Task Management**: Create, edit, and delete tasks with custom titles, descriptions, categories, priorities (Low, Medium, High), and due dates.
 - **Subtasks Checklist**: Break down tasks into actionable subtasks with live progress bars.
 - **Kanban Board**: Column-based status transition view (Pending, In Progress, Completed).
 - **Advanced Filtering & Sorting**: Filter by status, priority, and category, or search by keyword instantly.
-- **Responsive SaaS UI**: Polished typography, clean neutral color palette, and mobile-friendly navigation.
+- **Robust Error Handling**: Removed silent error swallowing and fake success responses; meaningful database error alerts are displayed immediately if any operation fails.
 
 ---
 
@@ -35,14 +35,10 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY="your-supabase-anon-key"
 ### Installation & Run
 
 1. Install dependencies:
-   ```bash
-   npm install
-   ```
+   $$npm install$$
 
 2. Run the development server:
-   ```bash
-   npm run dev
-   ```
+   $$npm run dev$$
 
 3. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
@@ -53,9 +49,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY="your-supabase-anon-key"
 TaskFlow is configured for Next.js static export (`output: 'export'`) optimized for Cloudflare Pages:
 
 1. Build the production application:
-   ```bash
-   npm run build
-   ```
+   $$npm run build$$
 
 2. Output files will be generated in the `/out` directory.
 
@@ -81,7 +75,7 @@ TaskFlow is configured for Next.js static export (`output: 'export'`) optimized 
 ├── lib/
 │   ├── initial-tasks.ts # Default starter mock tasks
 │   ├── supabase.ts      # Supabase browser-side client initialization
-│   └── tasks-service.ts # Supabase CRUD service with RLS
+│   └── tasks-service.ts # Supabase CRUD service with strict error throwing
 └── types/
     └── task.ts          # TypeScript interfaces
 ```
